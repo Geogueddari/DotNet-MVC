@@ -6,13 +6,16 @@ using Microsoft.EntityFrameworkCore;
 using WebApplication2.Models;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebApplication2.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Categorie> Categories { get; set; }
         public DbSet<Produit> Produits { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) :
@@ -20,6 +23,8 @@ namespace WebApplication2.Data
         { }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Categorie>().HasData(
             new Categorie { Id = 1, Name = "Mobile", OrdreAffichage = "1" },
             new Categorie { Id = 2, Name = "Ordinateur", OrdreAffichage = "2" },

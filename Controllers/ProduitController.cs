@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WebApplication2.Data;
@@ -22,6 +23,7 @@ namespace WebApplication2.Controllers
                  List<Produit> ProduitList = _db.Produits.ToList();
                 return View(ProduitList);
             }
+            [Authorize]
             public IActionResult Create()
             {
                 ProduitVM produitVM = new()
@@ -57,6 +59,7 @@ namespace WebApplication2.Controllers
                 }
                 else return View();
             }
+        [Authorize]
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
@@ -132,24 +135,7 @@ namespace WebApplication2.Controllers
             return View(obj);
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        [Authorize]
         public IActionResult Delete(int? id)
             {
                 if (id == null || id == 0)

@@ -3,9 +3,11 @@ using System.ComponentModel;
 using Microsoft.AspNetCore.Mvc;
 using WebApplication2.Data;
 using WebApplication2.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication2.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CategorieController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -18,11 +20,12 @@ namespace WebApplication2.Controllers
             List<Categorie> categoryList = _db.Categories.ToList();
             return View(categoryList);
         }
+        [Authorize]
         public IActionResult Create()
         {
             return View();
         }
-
+     
         [HttpPost]
         public IActionResult Create(Categorie obj)
         {
@@ -39,6 +42,7 @@ namespace WebApplication2.Controllers
             }
             return View(obj);
         }
+        [Authorize]
         public IActionResult Edit(int? id)
         {
             if (id == null || id == 0)
@@ -65,7 +69,7 @@ namespace WebApplication2.Controllers
             else return View();
         }
 
-
+        [Authorize]
         public IActionResult Delete(int? id)
         {
             if (id == null || id == 0)
